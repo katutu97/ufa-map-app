@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [55.9578, 54.7388] },
+      "properties": {
+        "category": "Столкновение",
+        "severity": "Лёгкий",
+        "datetime": "2020-03-15 14:30:00",
+        "address": "Уфа, пр. Октября, 12",
+        "dead_count": 0,
+        "injured_count": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [55.9621, 54.7412] },
+      "properties": {
+        "category": "Наезд на пешехода",
+        "severity": "Тяжёлый",
+        "datetime": "2020-05-22 08:15:00",
+        "address": "Уфа, ул. Ленина, 45",
+        "dead_count": 0,
+        "injured_count": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [55.9701, 54.7350] },
+      "properties": {
+        "category": "Съезд с дороги",
+        "severity": "Лёгкий",
+        "datetime": "2020-07-10 22:00:00",
+        "address": "Уфа, ул. Карла Маркса, 3",
+        "dead_count": 0,
+        "injured_count": 1
+      }
+    }
+  ]
+}

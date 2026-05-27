@@ -232,9 +232,6 @@ export default function MapComponent() {
       };
       heatmapLayerRef.current = heatmapLayer;
 
-      // ---------------------------------------------------------
-      // Когда стиль карты загружен — добавляем слой точек (по умолчанию)
-      // ---------------------------------------------------------
       map.on('styleload', () => {
         map.addLayer(pointLayer);
       });

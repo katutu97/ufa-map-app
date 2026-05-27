@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/katutu97/ufa-map-app.git/static/css/main.5d7262af.css",
-    "main.js": "/katutu97/ufa-map-app.git/static/js/main.8a01fbdc.js",
+    "main.css": "/katutu97/ufa-map-app.git/static/css/main.7cbc96e7.css",
+    "main.js": "/katutu97/ufa-map-app.git/static/js/main.92314f5d.js",
     "static/js/485.e119146e.chunk.js": "/katutu97/ufa-map-app.git/static/js/485.e119146e.chunk.js",
     "static/js/46.23cc334f.chunk.js": "/katutu97/ufa-map-app.git/static/js/46.23cc334f.chunk.js",
     "static/js/453.84754d1b.chunk.js": "/katutu97/ufa-map-app.git/static/js/453.84754d1b.chunk.js",
     "index.html": "/katutu97/ufa-map-app.git/index.html",
-    "main.5d7262af.css.map": "/katutu97/ufa-map-app.git/static/css/main.5d7262af.css.map",
-    "main.8a01fbdc.js.map": "/katutu97/ufa-map-app.git/static/js/main.8a01fbdc.js.map",
+    "main.7cbc96e7.css.map": "/katutu97/ufa-map-app.git/static/css/main.7cbc96e7.css.map",
+    "main.92314f5d.js.map": "/katutu97/ufa-map-app.git/static/js/main.92314f5d.js.map",
     "485.e119146e.chunk.js.map": "/katutu97/ufa-map-app.git/static/js/485.e119146e.chunk.js.map",
     "453.84754d1b.chunk.js.map": "/katutu97/ufa-map-app.git/static/js/453.84754d1b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5d7262af.css",
-    "static/js/main.8a01fbdc.js"
+    "static/css/main.7cbc96e7.css",
+    "static/js/main.92314f5d.js"
   ]
 }

@@ -52,15 +52,11 @@ const TOURIST_POINTS = [
   },
 ];
 
-// =============================================================
-//  КОМПОНЕНТ
-// =============================================================
-
 type Mode = 'dtp-points' | 'heatmap';
 
 export default function MapComponent() {
   const containerRef = useRef<HTMLDivElement>(null);
-  // mapRef хранит объект карты между рендерами
+  
   const mapRef = useRef<any>(null);
   const sourceRef = useRef<any>(null);
   const pointLayerRef = useRef<any>(null);
@@ -71,11 +67,9 @@ export default function MapComponent() {
   const [mode, setMode] = useState<Mode>('dtp-points');
   const [routeBuilt, setRouteBuilt] = useState(false);
   const [dtpVisible, setDtpVisible] = useState(true);
-  const [stats, setStats] = useState({ total: 0, dead: 0, injured: 0, severe: 0 });
+  //const [stats, setStats] = useState({ total: 0, dead: 0, injured: 0, severe: 0 });
 
-  // -----------------------------------------------------------
-  // Инициализация карты — запускается один раз при загрузке
-  // -----------------------------------------------------------
+  // Инициализация карты 
   useEffect(() => {
     let cancelled = false;
 
@@ -91,16 +85,12 @@ export default function MapComponent() {
       });
       mapRef.current = map;
 
-      // ---------------------------------------------------------
-      // Загружаем плагин Directions (для построения маршрута)
-      // ---------------------------------------------------------
+      // Доп.задание: плагин Directions
       const { Directions } = await import('@2gis/mapgl-directions');
       const directions = new Directions(map, { directionsApiKey: API_KEY });
       directionsRef.current = directions;
 
-      // ---------------------------------------------------------
       // Добавляем маркеры туристического маршрута
-      // ---------------------------------------------------------
     // Создаём GeoJSON источник для туристических точек
     const touristGeoJson = {
     type: 'FeatureCollection' as const,
@@ -135,26 +125,26 @@ export default function MapComponent() {
         iconImage: 'circle-stroked',    
         iconWidth: [
         'interpolate', ['linear'], ['zoom'],
-        10, 12,    // на зуме 10 — иконка 8px
-        13, 22,   // на зуме 13 — 16px
-        16, 32,   // на зуме 16 — 24px
+        10, 12, 
+        13, 22,  
+        16, 32,   
         ],
         textField: ['get', 'name'],
         textFont: ['Noto_Sans'],
-        textColor: '#26de81',           // зелёный цвет — отличается от жёлтого ДТП
+        textColor: '#26de81',           
         textHaloColor: '#0a1a0f',
         textHaloWidth: 2,
         textSize: [
         'interpolate', ['linear'], ['zoom'],
-        10, 0,    // на зуме меньше 10 — текст не виден
-        12, 11,   // на зуме 12 — 11px
-        14, 14,   // на зуме 14 — 14px
-        17, 18,   // на зуме 17 — 18px
+        10, 0,    
+        12, 11,   
+        14, 14,   
+        17, 18,   
         ],
         iconPriority: 200,
         textPriority: 200,
         textOffset: [0, 14],
-        // Прятать если перекрывается другой надписью
+        
         allowOverlap: false,
         iconAllowOverlap: false,
     },
@@ -164,34 +154,28 @@ export default function MapComponent() {
     map.addLayer(touristLayer);
     });
 
-      // ---------------------------------------------------------
       // Загружаем GeoJSON с ДТП
-      // ---------------------------------------------------------
       const rawData = await import('./data/full-data.json');
       const data = rawData as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
 
-      // Считаем статистику
-      let dead = 0, injured = 0, severe = 0;
-      data.features.forEach((f) => {
-        const p = f.properties || {};
-        dead += p.dead_count || 0;
-        injured += p.injured_count || 0;
-        if (p.severity === 'Тяжёлый') severe++;
-      });
-      setStats({ total: data.features.length, dead, injured, severe });
+      // статистика
+      // let dead = 0, injured = 0, severe = 0;
+      // data.features.forEach((f) => {
+      //   const p = f.properties || {};
+      //   dead += p.dead_count || 0;
+      //   injured += p.injured_count || 0;
+      //   if (p.severity === 'Тяжёлый') severe++;
+      // });
+      // setStats({ total: data.features.length, dead, injured, severe });
 
-      // ---------------------------------------------------------
-      // Создаём источник данных GeoJSON
-      // ---------------------------------------------------------
+      // источник данных GeoJSON
       const source = new mapgl.GeoJsonSource(map, {
         data,
         attributes: { visible: true },
       });
       sourceRef.current = source;
 
-      // ---------------------------------------------------------
       // Слой точек ДТП
-      // ---------------------------------------------------------
       const pointLayer: any = {
         id: 'dtp-points-layer',
         filter: [
@@ -214,9 +198,7 @@ export default function MapComponent() {
       };
       pointLayerRef.current = pointLayer;
 
-      // ---------------------------------------------------------
       // Слой тепловой карты
-      // ---------------------------------------------------------
       const heatmapLayer: any = {
         id: 'dtp-heatmap-layer',
         filter: [
@@ -224,14 +206,23 @@ export default function MapComponent() {
         ],
         type: 'heatmap' as const,
         style: {
+          //color: [
+            //'interpolate', ['linear'], ['heatmap-density'],
+            //0,   'rgba(0, 0, 0, 0)',
+            //0.2, 'rgba(0, 100, 255, 0.8)',
+            //0.4, 'rgba(0, 200, 200, 1)',
+            //0.6, 'rgba(255, 200, 0, 1)',
+            //0.8, 'rgba(255, 100, 0, 1)',
+            //1,   'rgba(255, 0, 0, 1)',
+          //],
           color: [
             'interpolate', ['linear'], ['heatmap-density'],
             0,   'rgba(0, 0, 0, 0)',
-            0.2, 'rgba(0, 100, 255, 0.8)',
-            0.4, 'rgba(0, 200, 200, 1)',
-            0.6, 'rgba(255, 200, 0, 1)',
-            0.8, 'rgba(255, 100, 0, 1)',
-            1,   'rgba(255, 0, 0, 1)',
+            0.2, '#f8b58b',
+            0.4, '#f59e72',
+            0.6, '#f2855d',
+            0.8, '#ef6a4c',
+            1,   '#eb4a40',
           ],
           radius: 22,
           intensity: 0.9,
@@ -261,9 +252,7 @@ export default function MapComponent() {
     };
   }, []);
 
-  // -----------------------------------------------------------
-  // Переключение режима точки ↔ тепловая карта
-  // -----------------------------------------------------------
+  // Переключение режима точки - тепловая карта
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -280,9 +269,7 @@ export default function MapComponent() {
     }
   }, [mode]);
 
-  // -----------------------------------------------------------
   // Построение пешеходного маршрута через Directions
-  // -----------------------------------------------------------
   const clearRoute = () => {
     const directions = directionsRef.current;
     if (!directions) return;
@@ -310,33 +297,30 @@ export default function MapComponent() {
     if (!directions) return;
 
     try {
-        // Directions принимает просто массив координат [lng, lat]
+        // Directions принимает просто массив координат 
         const points = TOURIST_POINTS.map((p) => p.coords);
 
         await directions.pedestrianRoute({
-        points: points,
+          points: points,
+          style: {
+            routeLineWidth: 4,
+            substrateLineWidth: 7,
+            haloLineWidth: 10,
+          }
         });
 
         setRouteBuilt(true);
 
-        // После построения маршрута — применить стиль в зависимости от текущего зума
+        // После построения маршрута
         setTimeout(() => {
-          const map = mapRef.current;
-          if (!map) return;
-          const zoom = map.getZoom();
-          const routeCanvas = document.querySelector(
-            '.mapgl-directions-route-canvas'
-          ) as HTMLElement;
-          if (routeCanvas) {
-            if (zoom < 11) {
-              routeCanvas.style.opacity = '0.35';
-            } else if (zoom < 13) {
-              routeCanvas.style.opacity = '0.65';
-            } else {
-              routeCanvas.style.opacity = '1';
+          document.querySelectorAll('.mapgl-marker').forEach((el) => {
+            const html = el.innerHTML;
+            if (html.includes('>A<') || html.includes('>B<') ||
+                html.match(/>\d</)) {
+              (el as HTMLElement).style.display = 'none';
             }
-          }
-        }, 150);
+          });
+        }, 1000);
 
     } catch (e) {
         console.error('Ошибка маршрута:', e);
@@ -344,9 +328,6 @@ export default function MapComponent() {
     }
  };
 
-  // -----------------------------------------------------------
-  // Рендер UI
-  // -----------------------------------------------------------
   return (
     <>
       {/* Контейнер карты — занимает весь экран */}
@@ -382,7 +363,7 @@ export default function MapComponent() {
             style={{ width: '100%', marginBottom: 12 }}
             onClick={toggleDtp}
             >
-            {dtpVisible ? '👁️ Скрыть ДТП' : '👁️ Показать ДТП'}
+            {dtpVisible ? 'Скрыть ДТП' : 'Показать ДТП'}
         </button>
 
         {/* Легенда тепловой карты — показывается только в режиме heatmap */}
@@ -399,7 +380,7 @@ export default function MapComponent() {
 
         {/* Туристический маршрут */}
         <div style={{ marginTop: 14 }}>
-          <div className="route-title">🚶 Маршрут по Уфе</div>
+          <div className="route-title">Маршрут по Уфе</div>
           <div className="route-list">
             {TOURIST_POINTS.map((point) => (
               <div className="route-item" key={point.id}>
@@ -420,7 +401,7 @@ export default function MapComponent() {
         </div>
 
         {/* Статистика ДТП */}
-        <div className="dtp-stats">
+        {/* <div className="dtp-stats">
           <div className="stats-title">Статистика ДТП</div>
           <div className="stats-grid">
             <div className="stat-card">
@@ -440,7 +421,7 @@ export default function MapComponent() {
               <div className="stat-label">Тяжёлых<br/>случаев</div>
             </div>
           </div>
-        </div>
+        </div> */}
 
       </div>
     </>

@@ -60,9 +60,9 @@ html, body, #root {
 }
 
 .mode-btn.active {
-  background: linear-gradient(135deg, #4f8ef7, #6a5af9);
+  background: linear-gradient(135deg, #f2855d, #eb4a40);
   color: #fff;
-  box-shadow: 0 4px 15px rgba(79,142,247,0.4);
+  box-shadow: 0 4px 15px #eb4b40a5;
   transform: translateY(-1px);
 }
 
@@ -112,7 +112,7 @@ html, body, #root {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4f8ef7, #6a5af9);
+  background: linear-gradient(135deg, #f2855d, #eb4a40);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,7 +143,7 @@ html, body, #root {
 .build-route-btn {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #4f8ef7, #6a5af9);
+  background: linear-gradient(135deg, #f2855d, #eb4a40);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -152,16 +152,16 @@ html, body, #root {
   cursor: pointer;
   transition: all 0.25s ease;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(79,142,247,0.35);
+  box-shadow: 0 4px 15px #eb4b40a5;
 }
 
 .build-route-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79,142,247,0.5);
+  box-shadow: 0 6px 20px #eb4b40a5;
 }
 
 /* ===== СТАТИСТИКА ДТП ===== */
-.dtp-stats {
+/* .dtp-stats {
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid rgba(255,255,255,0.08);
@@ -206,7 +206,7 @@ html, body, #root {
   font-size: 10px;
   color: rgba(255,255,255,0.45);
   line-height: 1.3;
-}
+} */
 
 /* ===== ЛЕГЕНДА ТЕПЛОВОЙ КАРТЫ ===== */
 .heatmap-legend {
@@ -218,12 +218,19 @@ html, body, #root {
 .legend-bar {
   height: 12px;
   border-radius: 6px;
-  background: linear-gradient(to right,
+  /* background: linear-gradient(to right,
     rgba(0,100,255,0.3),
     rgba(0,200,200,1),
     rgba(255,200,0,1),
     rgba(255,100,0,1),
     rgba(255,0,0,1)
+  ); */
+  background: linear-gradient(to right,
+    #f8b58b,
+    /* #f59e72,
+    #f2855d,
+    #ef6a4c, */
+    #eb4a40
   );
   margin-bottom: 5px;
 }
@@ -235,14 +242,11 @@ html, body, #root {
   color: rgba(255,255,255,0.45);
 }
 
-/* ===== СТИЛИ ДЛЯ МАРШРУТА Directions С ЗАВИСИМОСТЬЮ ОТ МАСШТАБА ===== */
-
-/* Canvas с маршрутом — плавное изменение прозрачности */
-.mapgl-directions-route-canvas {
-  transition: opacity 0.25s ease, filter 0.25s ease;
+/* Скрываем встроенные маркеры A, B, 1,2,3 плагина Directions */
+.mapgl-directions-point {
+  display: none !important;
 }
 
-/* Дополнительно: делаем линию чуть толще через SVG-фильтр (не меняя canvas) */
-.mapgl-directions-route-canvas canvas {
-  filter: drop-shadow(0 0 2px rgba(79, 142, 247, 0.3));
+.mapgl-directions-point-label {
+  display: none !important;
 }
